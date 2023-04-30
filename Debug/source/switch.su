@@ -1,0 +1,3 @@
+/Users/akin/MCUXpressoIDE_11.7.0_9198/workspace/final_project/CMSIS/core_cm0plus.h:733:22:__NVIC_EnableIRQ	16	static
+../source/switch.c:20:6:PORTC_PORTD_IRQHandler	8	static
+../source/switch.c:28:6:operate_switch_interrupts	8	static
