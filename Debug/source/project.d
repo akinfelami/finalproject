@@ -22,7 +22,8 @@ source/project.o source/project.d: ../source/project.c \
  /Users/akin/MCUXpressoIDE_11.7.0_9198/workspace/final_project/board/clock_config.h \
  /Users/akin/MCUXpressoIDE_11.7.0_9198/workspace/final_project/CMSIS/MKL46Z4.h \
  /Users/akin/MCUXpressoIDE_11.7.0_9198/workspace/final_project/utilities/fsl_debug_console.h \
- ../source/switch.h ../source/utils.h
+ ../source/switch.h ../source/utils.h \
+ /Users/akin/MCUXpressoIDE_11.7.0_9198/workspace/final_project/drivers/fsl_adc16.h
 /Users/akin/MCUXpressoIDE_11.7.0_9198/workspace/final_project/board/board.h:
 /Users/akin/MCUXpressoIDE_11.7.0_9198/workspace/final_project/board/clock_config.h:
 /Users/akin/MCUXpressoIDE_11.7.0_9198/workspace/final_project/drivers/fsl_common.h:
@@ -48,3 +49,4 @@ source/project.o source/project.d: ../source/project.c \
 /Users/akin/MCUXpressoIDE_11.7.0_9198/workspace/final_project/utilities/fsl_debug_console.h:
 ../source/switch.h:
 ../source/utils.h:
+/Users/akin/MCUXpressoIDE_11.7.0_9198/workspace/final_project/drivers/fsl_adc16.h:

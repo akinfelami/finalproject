@@ -11,6 +11,21 @@
 #include "fsl_debug_console.h"
 #include "switch.h"
 #include "utils.h"
+#include "fsl_adc16.h"
+
+
+
+/*******************************************************************************
+ * Definitions
+ ******************************************************************************/
+#define DEMO_ADC16_BASE ADC0
+#define DEMO_ADC16_CHANNEL_GROUP 0U
+#define DEMO_ADC16_USER_CHANNEL 0U /* PTE20, ADC0_SE0 */
+
+#define DEMO_ADC16_IRQn ADC0_IRQn
+#define DEMO_ADC16_IRQ_HANDLER_FUNC ADC0_IRQHandler
+
+
 
 
 /*
