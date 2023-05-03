@@ -1,1 +1,6 @@
-../source/project.c:22:5:main	8	static
+/Users/akin/MCUXpressoIDE_11.7.0_9198/workspace/final_project/CMSIS/core_cm0plus.h:733:22:__NVIC_EnableIRQ	16	static
+/Users/akin/MCUXpressoIDE_11.7.0_9198/workspace/final_project/drivers/fsl_adc16.h:386:20:ADC16_EnableHardwareTrigger	16	static
+/Users/akin/MCUXpressoIDE_11.7.0_9198/workspace/final_project/drivers/fsl_adc16.h:504:24:ADC16_GetChannelConversionValue	16	static
+../source/project.c:44:6:ADC0_IRQHandler	8	static
+../source/project.c:59:13:init_adc	40	static
+../source/project.c:101:5:main	8	static

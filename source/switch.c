@@ -1,5 +1,8 @@
+#include <stdio.h>
+#include <stdbool.h>
 #include <MKL46Z4.h>
 #include "switch.h"
+#include "utils.h"
 
 /* ----------------------------------------------------------------------
  Note the different characters around the library names.
@@ -16,24 +19,46 @@ GPIO_Type* global_PTE = PTE;
 PORT_Type* global_PORTC = PORTC;
 GPIO_Type* global_PTC = PTC;
 
+typedef struct {
+	unsigned int sec;
+	unsigned int msec;
+} time;
+
+time current_time;
+
+volatile bool switchPressed = false;
+
+
+
 // IRQ Handler for switch
 void PORTC_PORTD_IRQHandler(void) {
+	switchPressed = true;
+//	init_pit();
 	PTE->PTOR = GPIO_PTOR_PTTO(1 << RED_LED_PIN); // button pressed, toggle LED
 	PORTC->PCR[SWITCH_1_PIN] |= PORT_PCR_ISF(1);  // clear the interrupt status flag by writing 1 to it
+	switchPressed=false;
+
 }
 
-/*
- Main program: entry point
- */
+// IRQ for timer
+void PIT_IRQHandler(void){
+
+	if (current_time.msec==999){
+		current_time.sec +=1;
+		current_time.msec=0;
+	}else{
+		current_time.msec +=1;
+	}
+	if(current_time.sec%4==0){ // every 4seconds toggle.
+		delay();
+		LEDGreen_Toggle();
+	}
+	PIT->CHANNEL[0].TFLG = PIT_TFLG_TIF_MASK;
+
+}
+
 void operate_switch_interrupts(void) {
-	// setup variables so we can see them in debugger
-	// if you get rid of this it seems the compiler just optimizes the variables away
-	// this is for educational purposes
-	global_SIM = global_SIM;
-	global_PORTE = global_PORTE;
-	global_PTE = global_PTE;
-	global_PORTC = global_PORTC;
-	global_PTC = global_PTC;
+
 
 	// setup red led
 	SIM->SCGC5 |= SIM_SCGC5_PORTE_MASK; //Enable the clock to port E
@@ -52,7 +77,23 @@ void operate_switch_interrupts(void) {
 	PORTC->PCR[SWITCH_1_PIN] |= PORT_PCR_IRQC(0b1011); // Set up the IRQC to interrupt on either edge (i.e. from high to low or low to high)
 
 	NVIC_EnableIRQ(PORTC_PORTD_IRQn);
+    printf("ADC Value: %d\r\n", switchPressed);
 	while(1){}
+}
+
+void init_pit(void){
+
+	SIM->SCGC6 |= SIM_SCGC6_PIT_MASK;
+	PIT->MCR = 0;
+	PIT->CHANNEL[0].LDVAL = DEFAULT_SYSTEM_CLOCK / 1000;
+	PIT->CHANNEL[0].TCTRL = PIT_TCTRL_TIE_MASK; // Timer interrupt enable
+	PIT->CHANNEL[0].TCTRL |= PIT_TCTRL_TEN_MASK ; //enable timer to start countdown;
+
+
+	current_time.sec = 0;
+	current_time.msec= 0;
+	NVIC_EnableIRQ(PIT_IRQn);
+
 }
 
 
